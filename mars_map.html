@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <style text="text/css">
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+    <title>Threejs4RennesJS</title>
+</head>
+<body id="body">
+    <div style="position:relative;">
+      <img src="./images/ozzo-logo.svg" style="position: absolute; top: 10px; left: 10px; width: 3%;"/>
+    </div>
+    <noscript>You need to enable javascript to run</noscript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script>
+    // Init scene & camera
+      let scene = new THREE.Scene();
+      let camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+      camera.position.z = 5;
+      let renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      // Init the camera mouse controls
+      controls = new THREE.OrbitControls( camera );
+      
+      //Add lights
+      let light = new THREE.DirectionalLight( 0xdddddd, 0.8 ); 
+      scene.add(light);
+      light.position.set(5, 0, 5);
+
+      //Add the planet 
+      PLANET_RADIUS = 1;
+      let planetMesh = new THREE.Mesh(
+        new THREE.SphereBufferGeometry(PLANET_RADIUS, 32, 32), 
+        new THREE.MeshPhongMaterial({
+          map: new THREE.TextureLoader().load('images/mars_4k_color.jpg')
+        })
+      );
+      scene.add(planetMesh)
+
+      function animate() {
+        requestAnimationFrame( animate );
+        controls.update();
+        renderer.render( scene, camera );
+      }
+      animate();
+    </script>
+</body>
+</html>

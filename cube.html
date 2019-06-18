@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <style text="text/css">
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+    <title>Threejs4RennesJS</title>
+</head>
+<body id="body">
+    <div style="position:relative;">
+      <img src="./images/ozzo-logo.svg" style="position: absolute; top: 10px; left: 10px; width: 3%;"/>
+    </div>
+    <noscript>You need to enable javascript to run</noscript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+      var aspect = window.innerWidth / window.innerHeight;
+      var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
+      var renderer = new THREE.WebGLRenderer();
+      var controls = new THREE.OrbitControls( camera );
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+      var material = new THREE.MeshNormalMaterial();
+      var cube = new THREE.Mesh( geometry, material );
+      scene.add( cube );
+      camera.position.z = 3;
+
+      var render = function () {
+        requestAnimationFrame( render );
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        controls.update();
+        renderer.render( scene, camera );
+      };
+
+      render();
+    </script>
+</body>
+</html>
